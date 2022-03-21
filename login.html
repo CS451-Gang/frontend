@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Log in</title>
+        <link rel="stylesheet" type="text/css" href="login.css">
+        <!-- Load FontAwesome -->
+        <script src="https://kit.fontawesome.com/a81dbae260.js" crossorigin="anonymous"></script>
+        <!-- Load React -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    </head>
+    <body>
+        <header class="nav">
+            <a href="https://www.umkc.edu/"><img src="images/umkc logo white.png" style="width: 7%;"></a>
+        </header>
+        <br>
+        <div class="login">
+            <form id="login" method="get" action="login.php">
+                <h1>Welcome</h1>
+                <label for="stuUser">UMKC Email:</label>
+                <input type="text" name="stuUser" id="stuUser" placeholder="Student Email">
+                <br>
+                <label for="stuID">Student ID:</label>
+                <input type="text" name="stuID" id="stuID" placeholder="Student ID">
+                <br>
+                <label for="stuPass">Password:</label>
+                <input type="password" name="stuPass" id="stuPass" placeholder="Password">
+                <br>
+                <label>Are you a student?</label>
+                <input type="checkbox" name="isStudent" id="isStudent">
+                <br><br>
+                <input type="submit" name="log" id="log" value="Sign In">
+                <br>
+                <div class="forgotPass"><a href="#">Forgot Password?</a></div>
+            </form>
+        </div>
+        <footer></footer>
+    </body>
+</html>
