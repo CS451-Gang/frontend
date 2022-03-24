@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Log in</title>
+        <link rel="stylesheet" type="text/css" href="login.css">
+        <!-- Load FontAwesome -->
+        <script src="https://kit.fontawesome.com/a81dbae260.js" crossorigin="anonymous"></script>
+        <!-- Load React -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    </head>
+    <body>
+        <header class="nav">
+            <a href="https://www.umkc.edu/"><img src="images/umkc logo white.png" style="height: 75px;"></a>
+        </header>
+        <br>
+        <div class="login">
+            <form id="login" method="get" action="http://127.0.0.1:8000/api/login">
+                <h1>Welcome</h1>
+                <label for="stuEmail">UMKC Email</label>
+                <div class="inputicon">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input type="text" name="stuEmail" id="stuEmail" placeholder="UMKC Email">
+                </div>
+                <label for="stuID">Student ID</label>
+                <div class="inputicon">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" name="stuID" id="stuID" placeholder="Student ID">
+                </div>
+                <label for="stuPass">Password</label>
+                <div class="inputicon">
+                    <i class="fa-solid fa-key icon"></i>
+                    <input type="password" name="stuPass" id="stuPass" placeholder="Password">
+                </div>
+                <label>Are you a student?</label>
+                <input type="checkbox" name="isStudent" id="isStudent">
+                <input type="submit" name="log" id="log" value="Sign In">
+                <div class="forgotPass"><a href="#">Forgot Password?</a></div>
+            </form>
+        </div>
+        <footer></footer>
+    </body>
+</html>
