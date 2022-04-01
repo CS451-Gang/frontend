@@ -74,7 +74,7 @@ h1{
     color:black;
 }
 
-#stuID, #stuEmail, #stuPass{
+#student_id, #email, #password{
     width: 80%;
     height: 30px;
     padding: 5px 15px;
