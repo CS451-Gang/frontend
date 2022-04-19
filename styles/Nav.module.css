@@ -1,0 +1,29 @@
+
+.nav {
+    height: 60px;
+    padding: 10px;
+    background: #0066cc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-center;
+    border-bottom: 5px solid yellow;
+    font-family: 'Helvetica';
+  }
+  
+  .nav ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    list-style: none;
+    margin-left: auto;
+  }
+  
+  .nav ul li a {
+    margin-left: 20px;
+  }
+
+  .nav logo {
+    margin-right: auto;
+  }
+  

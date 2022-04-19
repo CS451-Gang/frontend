@@ -1,0 +1,32 @@
+@font-face { /*for headings and body copy*/
+  font-family: 'Bitter', serif;
+  src: url('https://fonts.googleapis.com/css2?family=Bitter&family=Oswald&display=swap');
+}
+
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color:lightgray;
+}
+
+.main {
+  width: 500px;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 5%;
+  padding: 80px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.h1{
+  font-family: "Bitter";
+  font-size: 50px;
+  color:#0066cc;
+}
