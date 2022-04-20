@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.MuiList-root {
+  max-height: 40vh;
+  overflow: scroll;
+}
+
+.MuiFormHelperText-root {
+  padding-bottom: 1rem;
+}

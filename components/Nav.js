@@ -11,7 +11,7 @@ const Nav = () => {
         </nav>
         <ul>
             <li>
-                <Link href='/faculty/facultyHome'>Home</Link>
+                <Link href='/faculty/home'>Home</Link>
             </li>
             <li>
                 <Link href='/faculty/manageApp'>Manage Application</Link>

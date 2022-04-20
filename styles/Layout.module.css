@@ -5,6 +5,7 @@
 
 .container {
   min-height: 100vh;
+  width: fit-content;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -14,8 +15,10 @@
 }
 
 .main {
-  width: 500px;
-  overflow: hidden;
+  width: 80vw;
+  /* width: 85vw; */
+  /* max-height: 80vh; */
+  overflow: scroll;
   margin: auto;
   margin-top: 5%;
   padding: 80px;

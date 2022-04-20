@@ -1,15 +1,13 @@
-import axios from "axios";
 const jwt = require("jsonwebtoken");
-const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 
-function generate_jwt(minutes_to_live, user_id, email, is_admin) {
+function generate_jwt(minutes_to_live, user_id, email, is_faculty) {
     return jwt.sign({
         "exp": Math.floor((Date.now() / 1000) + (minutes_to_live * 60)),
         "iat": Math.floor(Date.now() / 1000),
         "sub": user_id,
         "email": email,
-        "is_admin": is_admin,
+        "is_faculty": is_faculty,
     }, "cs451", { algorithm: "HS256" });
 }
 
