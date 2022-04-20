@@ -7,7 +7,7 @@ const Nav = () => {
     <>
     <nav className={navStyles.nav}>
         <nav className={navStyles.logo}>
-            <Image src="/umkc_logo_white.png" width={80} height={40} />
+            <Image src="/UMKC_logo_white.png" width={80} height={40} />
         </nav>
         <ul>
             <li>
@@ -20,7 +20,10 @@ const Nav = () => {
                 <Link href='/faculty/submissions'>View Submissions</Link>
             </li>
             <li>
-                <Link href='/'>Logout</Link>
+                <Link href='/faculty/login'>Login</Link>
+            </li>
+            <li>
+                <Link href='/logout'>Logout</Link>
             </li>
         </ul>
     </nav>
