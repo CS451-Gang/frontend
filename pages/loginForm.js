@@ -56,20 +56,19 @@ export default function LoginForm() {
         }
 
         if(validate()){
+            axios({
+                method: "post",
+                url: "/api/login",
+                data: data,
+                headers: { "Content-Type": "application/json" }
+            }).then(res => {
+                if (res.status === 200) {
+                    window.location.replace('/faculty/home');
+                }
+            }).catch(err => {
+                setMessage(err.response.data.message);
+            });
         }
-
-        axios({
-            method: "post",
-            url: "/api/login",
-            data: data,
-            headers: { "Content-Type": "application/json" }
-        }).then(res => {
-            if (res.status === 200) {
-                window.location.replace('/faculty/home');
-            }
-        }).catch(err => {
-            setMessage(err.response.data.message);
-        });
     };
 
     return (
