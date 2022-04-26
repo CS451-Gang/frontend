@@ -1,8 +1,5 @@
 import Head from 'next/head'
 import Button from '@mui/material/Button'
-import { useEffect } from 'react'
-
-useEffect
 
 export default function Home() {
   return (
@@ -10,8 +7,9 @@ export default function Home() {
       <Head>
         <title>Login Page</title>
       </Head>
+
       <Button href="/login" variant="contained" size="large" fontFamily="Helvetica">
-        Login
+        Student Login
       </Button>
     </div>
   )

@@ -20,7 +20,7 @@ export default function CheckBox(props){
                 control={<MuiCheckbox
                     name={name}
                     //color={primary}
-                    labelPlacement={ labelPlacement || "start" }
+                    labelplacement={ labelPlacement || "start" }
                     checked={value || false}
                     onChange={e => onChange(ConvertToDefaultEventParam(name, e.target.checked))}
                 />}

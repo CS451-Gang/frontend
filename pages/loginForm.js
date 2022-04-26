@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Head from 'next/head';
-//import axios from 'axios';
+import axios from 'axios';
 import { useState } from 'react';
 
 import { FormControl, FormGroup, FormLabel, Paper, TextField } from '@mui/material';
@@ -32,7 +32,7 @@ export default function LoginForm() {
     
         setErrors({
             ...temp
-        })        
+        })
 
         if (fieldValues == values)
             return Object.values(temp).every(x => x == "")
@@ -58,15 +58,19 @@ export default function LoginForm() {
         if(validate()){
             axios({
                 method: "post",
-                url: "/api/login",
+                url: "api/login",
                 data: data,
                 headers: { "Content-Type": "application/json" }
             }).then(res => {
                 if (res.status === 200) {
-                    window.location.replace('/faculty/home');
+                    const user_type = res.data.user_type;
+                    window.location.replace(`/${user_type}/home`);
+                } else {
+                    setMessage(res.message)
                 }
             }).catch(err => {
-                setMessage(err.response.data.message);
+                console.log(JSON.stringify(err))
+                setMessage(err.message);
             });
         }
     };
@@ -136,7 +140,9 @@ export default function LoginForm() {
             </Grid>
             </Grid>
         </Form>
+        <div>
         { message && <p>{message}</p> }
+        </div>
         </>
   )
 }

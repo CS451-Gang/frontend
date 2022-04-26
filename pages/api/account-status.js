@@ -6,7 +6,6 @@ export default function handler(req, res) {
             res.status(406).json({message: "You are not logged in."});
         } else {
             jwt.verify(req.cookies.token, "cs451", (err, decoded) => {
-                console.log(decoded)
                 if (err) {
                     res.status(500).json({message: "Internal server error"});
                 }

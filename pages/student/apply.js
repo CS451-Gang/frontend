@@ -1,12 +1,12 @@
 import React from 'react'
 import Head from 'next/head';
-import ApplyForm from '../Student/ApplyForm'
+import ApplyForm from './application-form'
 import { Box, Divider, Typography } from '@mui/material';
 import Layout from '../../components/Layout';
 
 export default function Apply(){
     return(
-        <Layout>
+        <>
         <Head>
             <title>Apply</title>
             <meta name="Apply" content="GTA application form" />
@@ -25,6 +25,6 @@ export default function Apply(){
             }}>
             <ApplyForm/>
         </Box>
-        </Layout>
+        </>
     )
 }

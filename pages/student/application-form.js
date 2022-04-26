@@ -3,7 +3,7 @@ import React from 'react'
 import { Grid } from '@mui/material';
 import { useForm, Form } from '../../components/useForm';
 import Controls from '../../components/controls/Controls';
-import * as applyService from '../../services/applyService.js';
+import * as applyService from '../api/applyService.js';
 
 const initialValues={
     firstName: "",

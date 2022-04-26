@@ -1,50 +1,50 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const axios = require("axios");
+const mysql = require("mysql2");
 
-function generate_jwt(minutes_to_live, user_id, email, is_faculty) {
+function generate_jwt(minutes_to_live, user_id, email, user_type) {
     return jwt.sign({
         "exp": Math.floor((Date.now() / 1000) + (minutes_to_live * 60)),
         "iat": Math.floor(Date.now() / 1000),
         "sub": user_id,
         "email": email,
-        "is_faculty": is_faculty,
+        "user_type": user_type,
     }, "cs451", { algorithm: "HS256" });
 }
 
-const secret_auth_db = {
-    id: 1,
-    email: "admin@umkc.edu",
-    salt: "$2b$12$Ygn9KS87EEVapR3xadxeNO",
-    hash: "$2b$12$Ygn9KS87EEVapR3xadxeNOi2ij0Edb1fNIIdf5fzuSQ4fDctbqwGS",
-    is_faculty: true
-}
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "gta"
+});
 
-export default function handler(req, res) {
-    if (req.cookies.token) {
-        res.status(406).send({message: "You are already logged in."});
-    } else if (req.method === 'POST') {
-        const body = req.body;
-        if (body.email === secret_auth_db.email) {
-            bcrypt.compare(body.password, secret_auth_db.hash, (err, result) => {
-                if (result) {
-                    const token = generate_jwt(30, secret_auth_db.id, body.email, secret_auth_db.is_faculty);
-
-                    res.setHeader('Set-Cookie', `token=${token}; HttpOnly; SameSite=Strict`);
-                    res.status(200).send({
-                        message: "Successfully logged in!",
-                    })
-                } else {
-                    res.status(401).send({
-                        message: "Invalid credentials"
-                    })
-                }
-            })
-        } else {
-            res.status(401).send({
-                message: "Email not found."
-            })
-        }
+export default function handler(request, response) {
+    if (request.cookies.token) {
+        response.status(406).send({message: "You are already logged in."});
+    } else if (request.method === 'POST') {
+        const body = request.body;
+        db.query(`SELECT * FROM accounts WHERE email = ?`, [body.email], (err, result) => {
+            if (err) {
+                response.status(500).send({message: `${err}`});
+            } else if (result.length === 0) {
+                response.status(406).send({message: "Invalid email or password."});
+            } else {
+                bcrypt.compare(body.password, result[0].password_hash, (err, compare_result) => {
+                    if (err) {
+                        response.status(500).send({message: "Internal server error"});
+                    } else if (compare_result) {
+                        const token = generate_jwt(60, result[0].user_id, result[0].email, result[0].user_type);
+                        response.setHeader('Set-Cookie', `token=${token}; HttpOnly; SameSite=Strict`);
+                        response.status(200).send({message: "Successfully logged in.", user_type: result[0].user_type});
+                    } else {
+                        response.status(406).send({message: "Invalid email or password."});
+                    }
+                });
+            }
+        });
     } else {
-        res.status(405).json({message: "Method not allowed"})
+        response.status(405).send({message: "Method not allowed"});
     }
 }

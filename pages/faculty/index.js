@@ -8,7 +8,7 @@ export default function Home() {
         <title>Login Page</title>
       </Head>
 
-      <Button href="/faculty/login" variant="contained" size="large" fontFamily="Helvetica">
+      <Button href="/login" variant="contained" size="large" fontFamily="Helvetica">
         Faculty Login
       </Button>
     </div>

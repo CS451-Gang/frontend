@@ -5,8 +5,15 @@ import Layout from '../components/Layout';
 import Controls from '../components/controls/Controls';
 
 export default function Logout(){
+    fetch('/api/logout', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    });
     return(
-        <Layout>
+        <>
         <Head>
             <title>Logout</title>
             <meta name="Logout" content="Logout of UMKC" />
@@ -31,10 +38,10 @@ export default function Logout(){
         }}>
             <Controls.Button
                 type="text"
-                href="/Home" //change this later
+                href="/" //change this later
                 text="Return Home"
                 />
         </Box>
-        </Layout>
+        </>
     )
 }

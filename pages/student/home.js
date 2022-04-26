@@ -2,7 +2,7 @@ import Head from 'next/head'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-const facultyHome = () => {
+const studentHome = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -21,13 +21,13 @@ const facultyHome = () => {
   return (
     <div>
       <Head>
-        <title>Home | Faculty</title>
+        <title>Home | Student</title>
       </Head>
 
-      <h1>Faculty Home</h1>
+      <h1>Student Home</h1>
       {user && <p>Welcome, {user.email}!</p>}
     </div>
   )
 }
 
-export default facultyHome
+export default studentHome
