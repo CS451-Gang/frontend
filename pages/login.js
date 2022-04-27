@@ -2,7 +2,6 @@ import React from 'react'
 import Head from 'next/head';
 import LoginForm from '../pages/loginForm'
 import { Box, Typography } from '@mui/material';
-import Layout from '../components/Layout';
 
 export default function Login(){
     return(

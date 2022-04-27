@@ -20,7 +20,7 @@ const Nav = () => {
         <>
             <nav className={navStyles.nav}>
                 <nav className={navStyles.logo}>
-                    <Image src="/UMKC_logo_white.png" width={80} height={40} />
+                    <a href="/"><Image src="/UMKC_logo_white.png" width={80} height={40} /></a>
                 </nav>
                 <ul>
                     {userType === "faculty" && 
@@ -45,7 +45,7 @@ const Nav = () => {
                                 <Link href='/student/apply'>Apply</Link>
                             </li>
                             <li>
-                                <Link href='/student/manage-app'>Manage Application</Link>
+                                <Link href='/student/manage-application'>Manage Application</Link>
                             </li>
                         </>
                     }
@@ -62,3 +62,19 @@ const Nav = () => {
 }
 
 export default Nav
+
+const getInitialProps = async function () {
+    let userType = null;
+
+    await fetch('/api/account-status', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(data => userType = data.user_type);
+
+    return { userType }
+}

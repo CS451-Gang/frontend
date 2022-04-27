@@ -123,7 +123,7 @@ export default function LoginForm() {
                     }}
                     />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Controls.CheckBox
                     name="isStudent"
                     label="Are you a student?"
@@ -131,7 +131,7 @@ export default function LoginForm() {
                     onChange={handleInputChange}
                     value={values.isStudent}
                     />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
                 <Controls.Button
                     type="submit"

@@ -24,3 +24,23 @@ export const getGradDegrees = () => ([
     {id: "MS", title: "Master of Science"},
     {id: "PhD", title: "Doctor of Philosophy"},
 ])
+
+export const createApplication = async (application) => {
+    let cleaned_application = {}
+    for (const [key, value] of Object.entries(application)) {
+        if (value == "") {
+            cleaned_application[key] = null
+        } else {
+            cleaned_application[key] = value
+        }
+    }
+
+    const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cleaned_application)
+    })
+    return response
+}

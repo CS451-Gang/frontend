@@ -1,8 +1,9 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Button from '@mui/material/Button'
 import { useEffect } from 'react'
 
-useEffect
+
 
 export default function Home() {
   return (
@@ -10,9 +11,10 @@ export default function Home() {
       <Head>
         <title>Login Page</title>
       </Head>
-      <Button href="/login" variant="contained" size="large" fontFamily="Helvetica">
-        Login
-      </Button>
+      <header>
+        <h1>Home</h1>
+      </header>
+      Welcome to the UMKC GTA application service! Please <Link href="/login"><a className="visible">log in</a></Link> to continue.
     </div>
   )
 }

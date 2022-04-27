@@ -1,16 +1,36 @@
 import Head from 'next/head'
-import Button from '@mui/material/Button'
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-export default function Home() {
+const studentHome = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/account-status')
+      .then(res => {
+        if (res.status === 200) {
+          setUser(res.data)
+          if (user.user_type !== "student") {
+            window.location.replace('/');
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        window.location.replace('/login');
+      })
+  }, [])
+
   return (
     <div>
       <Head>
-        <title>Login Page</title>
+        <title>Home | Student</title>
       </Head>
 
-      <Button href="/login" variant="contained" size="large" fontFamily="Helvetica">
-        Student Login
-      </Button>
+      <h1>Student Home</h1>
+      {user && <p>Welcome, {user.email}!</p>}
     </div>
   )
 }
+
+export default studentHome
