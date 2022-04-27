@@ -20,7 +20,7 @@ const Nav = () => {
         <>
             <nav className={navStyles.nav}>
                 <nav className={navStyles.logo}>
-                    <a href="/"><Image src="/UMKC_logo_white.png" width={80} height={40} /></a>
+                    <a href="/"><Image src="/images/UMKC_logo_white.png" width={80} height={40} /></a>
                 </nav>
                 <ul>
                     {userType === "faculty" && 
@@ -50,10 +50,10 @@ const Nav = () => {
                         </>
                     }
                     <li>
-                        <Link href='/login'>Login</Link>
+                        { userType == null && <Link href='/login'>Login</Link> }
                     </li>
                     <li>
-                        <Link href='/logout'>Logout</Link>
+                        { userType && <Link href='/logout'>Logout</Link> }
                     </li>
                 </ul>
             </nav>

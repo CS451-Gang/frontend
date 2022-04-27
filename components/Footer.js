@@ -5,8 +5,8 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { IconButton, Link, Typography } from '@mui/material';
 import Controls from './controls/Controls'
 
-import whiteLogo from '../public/umkc_white22.png';
-import duoLogo from '../public/umkc_duo_color22.png';
+import whiteLogo from '../public/images/umkc_white22.png';
+import duoLogo from '../public/images/umkc_duo_color22.png';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';

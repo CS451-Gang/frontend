@@ -7,7 +7,7 @@ const Layout = ({children}) => {
   return (
     <>
         <Head>
-            <link rel="icon" href="/umkc_favicon.ico" />
+            <link rel="icon" href="/images/umkc_favicon.ico" />
         </Head>
         <Nav />
         <div className={styles.containter}>
