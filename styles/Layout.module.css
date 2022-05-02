@@ -15,20 +15,22 @@
 }
 
 .main {
-  width: 80vw;
+  width: 55vw;
   /* width: 85vw; */
   /* max-height: 80vh; */
-  overflow: scroll;
+  overflow: auto; 
   margin: auto;
-  margin-top: 5%;
+  margin-top: 12vh;
+  margin-bottom: 15vh;
   padding: 80px;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.2);
-  text-align: center;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.15);
+  text-align: left;
 }
 
 .h1{
+  text-align: center;
   font-family: "Bitter";
   font-size: 50px;
   color:#0066cc;

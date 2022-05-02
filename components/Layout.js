@@ -1,12 +1,13 @@
 import styles from '../styles/Layout.module.css'
 import Head from 'next/head'
 import Nav from './Nav'
+import Footer from './Footer'
 
 const Layout = ({children}) => {
   return (
     <>
         <Head>
-            <link rel="icon" href="/umkc_favicon.ico" />
+            <link rel="icon" href="/images/umkc_favicon.ico" />
         </Head>
         <Nav />
         <div className={styles.containter}>
@@ -14,6 +15,7 @@ const Layout = ({children}) => {
                 {children}
             </main>
         </div>
+        <Footer/>
     </>    
   )
 }

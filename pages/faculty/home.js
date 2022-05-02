@@ -14,7 +14,7 @@ const facultyHome = () => {
       })
       .catch(err => {
         console.log(err);
-        window.location.replace('/faculty/login');
+        window.location.replace('/login');
       })
   }, [])
 

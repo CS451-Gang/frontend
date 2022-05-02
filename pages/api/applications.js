@@ -15,7 +15,7 @@ export default function handler(req, res) {
             res.status(406).json({message: "You are not logged in."});
         } else {
             jwt.verify(req.cookies.token, "cs451", (err, decoded) => {
-                if (decoded.is_faculty) {
+                if (decoded.user_type === "faculty") {
                     console.log(`Saw decoded: ${JSON.stringify(decoded)}`);
                     db.query(`SELECT * FROM applications`, (err, result) => {
                         if (err) {

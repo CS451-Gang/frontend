@@ -21,7 +21,7 @@ const submissions = () => {
       })
       .catch(err => {
         console.log(err)
-        window.location.replace('/faculty/login');
+        window.location.replace('/login');
       })
   }, [])
 
@@ -58,15 +58,15 @@ const submissions = () => {
       { field: 'email', headerName: 'Email', width: 300 },
       { field: 'current_level', headerName: 'Level', width: 100 },
       { field: 'graduating_semester', headerName: 'Graduating Semester', width: 150 },
-      { field: 'cumulate_gpa', headerName: 'GPA', width: 100 },
-      { field: 'hours_completed', headerName: 'Hours Completed', width: 50 },
+      { field: 'cumulative_gpa', headerName: 'GPA', width: 100, type: 'number' },
+      { field: 'hours_completed', headerName: 'Hours Completed', width: 50, type: 'number' },
       { field: 'undergraduate_degree', headerName: 'Undergraduate Degree', width: 200 },
       { field: 'current_major', headerName: 'Major', width: 150 },
       { field: 'applying_for', headerName: 'Applying For', width: 150 },
-      { field: 'international_student', headerName: 'International Student', width: 150 },
-      { field: 'gta_certified', headerName: 'GTA Certified', width: 100 },
+      { field: 'international_student', headerName: 'International Student', width: 150, type: 'boolean' },
+      { field: 'gta_certified', headerName: 'GTA Certified', width: 100, type: 'boolean' },
       { field: 'gta_certification_term', headerName: 'GTA Certification Term', width: 170 },
-      { field: 'gta_previous_degree', headerName: 'Previous Degree?', width: 150 },
+      { field: 'gta_previous_degree', headerName: 'Previous Degree?', width: 150, type: 'boolean' },
   ]
 
   return (

@@ -9,7 +9,7 @@ const db = mysql.createConnection({
 
 export default function handler(req, res) {
     if (!req.cookies.token) {
-        res.redirect("/faculty/login");
+        res.redirect("/login");
         res.status(406).send({message: "You are not logged in."});
     } else if (req.method === 'GET') {
         db.query(`SELECT * FROM applications`, (err, result) => {

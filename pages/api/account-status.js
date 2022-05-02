@@ -3,10 +3,9 @@ const jwt = require("jsonwebtoken");
 export default function handler(req, res) {
     if (req.method === 'GET') {
         if (!req.cookies.token) {
-            res.status(406).json({message: "You are not logged in."});
+            res.status(200).json({message: "You are not logged in.", user_type: null});
         } else {
             jwt.verify(req.cookies.token, "cs451", (err, decoded) => {
-                console.log(decoded)
                 if (err) {
                     res.status(500).json({message: "Internal server error"});
                 }
