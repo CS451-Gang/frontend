@@ -1,6 +1,7 @@
 import styles from '../styles/Layout.module.css'
 import Head from 'next/head'
 import Nav from './Nav'
+import { Autocomplete } from '@mui/material'
 
 const Layout = ({children}) => {
   return (
@@ -12,6 +13,7 @@ const Layout = ({children}) => {
         <div className={styles.containter}>
             <main className={styles.main}>
                 {children}
+                
             </main>
         </div>
     </>    
