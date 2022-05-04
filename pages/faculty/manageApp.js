@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Button from '@mui/material/Button';
 
 import axios from 'axios'
 import Head from 'next/head'
@@ -24,6 +25,7 @@ const manageApp = () => {
         window.location.replace('/faculty/login');
       })
   }, [])
+
 
   const CSclasses = [
     {class: 'CS 101', major: 'CS'},
@@ -90,11 +92,12 @@ const manageApp = () => {
 
         <h1>Manage Application</h1>
 
-        <h1>
+        <p>
           <Autocomplete
             multiple
             id="manage-CS-classes"
             options={CSclasses}
+            getOptionLabel={option => option.class}
             disableCloseOnSelect
             getOptionsLabel={(option) => option.class}
             renderOption={(props, option, { selected }) => (
@@ -102,7 +105,7 @@ const manageApp = () => {
                 <Checkbox
                   icon={icon}
                   checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
+                  style={{ marginRight: 5 }}
                   checked={selected}
                 />
                 {option.class}
@@ -112,14 +115,15 @@ const manageApp = () => {
             renderInput={(params) => (
               <TextField {...params} label="CS Classes" placerholder="Added Classes" />
             )}
-            />
-        </h1>
+          />
+        </p>
 
-        <h1>
+        <p>
           <Autocomplete
             multiple
             id="manage-ECE-classes"
             options={ECEclasses}
+            getOptionLabel={option => option.class}
             disableCloseOnSelect
             getOptionsLabel={(option) => option.class}
             renderOption={(props, option, { selected }) => (
@@ -138,13 +142,14 @@ const manageApp = () => {
               <TextField {...params} label="ECE Classes" placerholder="Added Classes" />
             )}
           />
-        </h1>
+        </p>
 
-        <h1>
+        <p>
           <Autocomplete
             multiple
             id="manage-IT-classes"
             options={ITclasses}
+            getOptionLabel={option => option.class}
             disableCloseOnSelect
             getOptionsLabel={(option) => option.class}
             renderOption={(props, option, { selected }) => (
@@ -163,7 +168,9 @@ const manageApp = () => {
               <TextField {...params} label="IT Classes" placerholder="Added Classes" />
             )}
           />
-        </h1>
+        </p>
+
+        <Button type="submit" variant="contained" >Submit Changes</Button>
 
       </div>
     </>
