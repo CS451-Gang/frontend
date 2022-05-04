@@ -9,7 +9,6 @@ const db = mysql.createConnection({
 });
 
 export default function handler(req, res) {
-    console.log(`Saw cookies: ${JSON.stringify(req.cookies)}`);
     if (req.method === 'GET') {
         if (!req.cookies.token) {
             res.status(406).json({message: "You are not logged in."});

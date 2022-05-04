@@ -11,7 +11,7 @@ const initialValues = {
     email: "nima.currie@umsystem.edu",
     stuID: 18371749,
     gradDegree: "BS",
-    gradSem: "",
+    gradSem: "Dec 2022",
     umkcGPA: "4.0",
     umkcHours: "120",
     undergradDegree: "",
@@ -26,8 +26,6 @@ const initialValues = {
 }
 
 export default function ApplyForm() {
-
-
     const validate = (fieldValues = values) => {
         //Checks if the elements pass the validation tests. If the condition is true for all properties, return true. Otherwise, false
         let temp = { ...errors }
@@ -69,6 +67,7 @@ export default function ApplyForm() {
         if (validate()) {
             try {
                 const response = await applyService.createApplication(values)
+                console.log("saw response " + JSON.stringify(response))
                 if (response.status == 201) {
                     console.log("Application submitted successfully.")
                     window.location.href = "/student/application-submitted"
@@ -262,7 +261,7 @@ export default function ApplyForm() {
                         <Controls.Button
                             type="submit"
                             text="Submit"
-                            href="/student/application-submitted"
+                            // href="/student/application-submitted"
                         />
                     </Grid>
                 </Grid>

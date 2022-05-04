@@ -8,7 +8,7 @@ export const getCourses = () => ([
     {id: "CS303", title: "Data Structures"},
     {id: "CS320", title: "Data Communications and Networking"},
     {id: "CS349", title: "Java Programming with Applications"},
-    {id: "CS3494R", title: "Applied Probability"},
+    {id: "CS394R", title: "Applied Probability"},
     {id: "CS404", title: "Introduction to Algorithms and Complexity"},
 ])
 
@@ -35,12 +35,14 @@ export const createApplication = async (application) => {
         }
     }
 
+    console.log(`Cleaned application: ${JSON.stringify(cleaned_application)}`)
+
     const response = await fetch('/api/apply', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(cleaned_application)
-    })
+    });
     return response
 }

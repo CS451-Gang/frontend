@@ -31,12 +31,13 @@ export default function handler(request, response) {
             } else if (result.length === 0) {
                 response.status(406).send({message: "Invalid email or password."});
             } else {
+                console.log(JSON.stringify(result));
                 bcrypt.compare(body.password, result[0].password_hash, (err, compare_result) => {
                     if (err) {
                         response.status(500).send({message: "Internal server error"});
                     } else if (compare_result) {
-                        const token = generate_jwt(60, result[0].user_id, result[0].email, result[0].user_type);
-                        response.setHeader('Set-Cookie', `token=${token}; HttpOnly; SameSite=Strict`);
+                        const token = generate_jwt(60, result[0].id, result[0].email, result[0].user_type);
+                        response.setHeader('Set-Cookie', `token=${token}; HttpOnly; SameSite=Strict; Max-Age=${60 * 60}`);
                         response.status(200).send({message: "Successfully logged in.", user_type: result[0].user_type});
                     } else {
                         response.status(406).send({message: "Invalid email or password."});
