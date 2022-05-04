@@ -14,7 +14,7 @@ export default function Login(){
             display: 'flex', 
             justifyContent:"center"
             }}>
-            <Typography variant="h3">Welcome!</Typography>
+            <Typography variant="h3">Welcome</Typography>
             </Box>
         <Box sx={{
                 display: 'flex',

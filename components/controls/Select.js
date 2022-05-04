@@ -7,13 +7,8 @@ export default function Select(props){
     return(
         <FormControl
             variant="filled"
-            sx={{width: 300}}
-            label={label}
-            name={name}
-            value={value}
-            onChange={onChange}
-            {...(error && {error:true})}
-            >
+            sx={{width: "100%"}}
+            {...(error && {error:true})}>
             <InputLabel>{label}</InputLabel>
             <MuiSelect
                 label={label}

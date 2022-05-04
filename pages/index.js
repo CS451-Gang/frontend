@@ -1,20 +1,24 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Button from '@mui/material/Button'
-import { useEffect } from 'react'
-
-
+import { Container } from '@mui/material';
+import Featured from '../components/Featured';
 
 export default function Home() {
   return (
     <div>
       <Head>
-        <title>Login Page</title>
+        <title>GTA Application Service</title>
       </Head>
-      <header>
-        <h1>Home</h1>
-      </header>
-      Welcome to the UMKC GTA application service! Please <Link href="/login"><a className="visible">log in</a></Link> to continue.
+      <Container maxWidth="sm">
+        <Featured 
+          imgSrc="/images/scofield_hall.jpg"
+          imgAlt="Atterbury Student Success Center at University of Missouri-Kansas City"
+          title="Welcome to UMKC"
+          subtitle="Cultivating Individuality and Academic Excellence"
+          buttonText="Apply to become a GTA"
+          buttonLink="/login"
+          />
+      </Container>
     </div>
   )
 }

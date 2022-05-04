@@ -26,9 +26,18 @@ const facultyHome = () => {
       <Head>
         <title>Home | Faculty</title>
       </Head>
-
-      <h1>Faculty Home</h1>
-      {user && <p>Welcome, {user.email}!</p>}
+      <Container maxWidth="sm">
+        <UserHome 
+          imgSrc="/images/walkway.jpg"
+          imgAlt="Atterbury Student Success Center at University of Missouri-Kansas City"
+          title={user && <Typography variant="h2">Hello, {user.email}!</Typography>}
+          subtitle="What do you want to do today?"
+          buttonText="Submit a GTA application"
+          buttonLink="/student/apply"
+          buttonText2="Manage previous applications"
+          buttonLink2="/student/manage-application"
+          />
+      </Container>
     </div>
   )
 }

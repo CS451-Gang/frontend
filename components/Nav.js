@@ -2,6 +2,7 @@ import navStyles from '../styles/Nav.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { AppBar } from '@mui/material'
 
 const Nav = () => {
     let [userType, setUserType] = useState(null);
@@ -18,9 +19,10 @@ const Nav = () => {
 
     return (
         <>
+        <AppBar position="fixed">
             <nav className={navStyles.nav}>
                 <nav className={navStyles.logo}>
-                    <a href="/"><Image src="/images/UMKC_logo_white.png" width={80} height={40} /></a>
+                    <Image src="/images/umkc_white22.png" width={98} height={53} />
                 </nav>
                 <ul>
                     {userType === "faculty" && 
@@ -57,6 +59,7 @@ const Nav = () => {
                     </li>
                 </ul>
             </nav>
+        </AppBar>
         </>
     )
 }

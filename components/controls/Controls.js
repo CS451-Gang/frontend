@@ -4,7 +4,7 @@ import CheckBox from './CheckBox'
 import Select from './Select'
 import Button from './Button'
 import IconButton from './IconButton'
-
+import AutoSelection from './AutoSelection'
 
 const Controls = {
     UserInput, 
@@ -12,7 +12,8 @@ const Controls = {
     Select,
     CheckBox,
     IconButton,
-    Button
+    Button,
+    AutoSelection
 }
 
 export default Controls;

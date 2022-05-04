@@ -11,7 +11,7 @@ const initialValues = {
     email: "nima.currie@umsystem.edu",
     stuID: 18371749,
     gradDegree: "BS",
-    gradSem: "May 2022",
+    gradSem: "",
     umkcGPA: "4.0",
     umkcHours: "120",
     undergradDegree: "",
@@ -22,10 +22,11 @@ const initialValues = {
     prevDegree: false,
     grader: true,
     labInstructor: false,
-    courses: {}
+    courses: "",
 }
 
 export default function ApplyForm() {
+
 
     const validate = (fieldValues = values) => {
         //Checks if the elements pass the validation tests. If the condition is true for all properties, return true. Otherwise, false
@@ -37,7 +38,7 @@ export default function ApplyForm() {
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(values.email) ? "" : "Email is not valid."
         if ('stuID' in fieldValues)
-            temp.stuID = values.stuID.length > 7 ? "" : "Minimum of 8 numbers required."
+            temp.stuID = values.stuID.length > 6 ? "" : "Minimum of 8 numbers required."
         if ('gradSem' in fieldValues)
             temp.gradSem = fieldValues.gradSem ? "" : "This field is required."
         // if ('undergradDegree' in fieldValues)
@@ -152,12 +153,29 @@ export default function ApplyForm() {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
+                        <Controls.Select
+                            name="gradDegree"
+                            label="Current Level:"
+                            value={values.gradDegree}
+                            options={applyService.getGradDegrees()}
+                            onChange={handleInputChange}
+                            error={errors.gradDegree}
+                        />
+                        <Controls.Select
+                            name="currMajor"
+                            label="Current Major:"
+                            value={values.currMajor}
+                            options={applyService.getMajors()}
+                            onChange={(event) => handleInputChange(event)}
+                            error={errors.currMajor}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
                         <Controls.UserInput
                             type="month"
                             name="gradSem"
                             label="Graduation Semester"
                             helperText="Choose 'May/Dec' for month"
-                            placeholder="MMM/YYYY"
                             value={values.gradSem}
                             onChange={handleInputChange}
                             error={errors.gradSem}
@@ -194,22 +212,12 @@ export default function ApplyForm() {
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
                         <Controls.Select
-                            name="gradDegree"
-                            label="Current Level:"
-                            value={values.gradDegree}
-                            options={applyService.getGradDegrees()}
-                            onChange={handleInputChange}
-                            error={errors.gradDegree}
-                        //can use a backend api to fetch options. see Dockerstorage(?)
-                        />
-                        <Controls.Select
-                            name="currMajor"
-                            label="Current Major:"
-                            value={values.currMajor}
-                            options={applyService.getMajors()}
+                            name="courses"
+                            label="Courses you can be a grader or lab instructor for:"
+                            value={values.courses}
+                            options={applyService.getCourses()}
                             onChange={(event) => handleInputChange(event)}
-                            error={errors.currMajor}
-                        //can use a backend api to fetch options. see Dockerstorage(?)
+                            error={errors.courses}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
@@ -250,19 +258,11 @@ export default function ApplyForm() {
                             </FormGroup>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
-                        {/* <Controls.AutoSelection
-                    name="courses"
-                    label="Courses you could serve as lab instructor or grade for:"
-                    value={values.courses}
-                    options={applyService.getCourses()} //fix this import
-                    onChange={handleInputChange}
-                    /> */}
-                    </Grid>
                     <Grid item xs={6}>
                         <Controls.Button
                             type="submit"
                             text="Submit"
+                            href="/student/application-submitted"
                         />
                     </Grid>
                 </Grid>
