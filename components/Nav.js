@@ -47,7 +47,7 @@ const Nav = () => {
                                 <Link href='/student/apply'>Apply</Link>
                             </li>
                             <li>
-                                <Link href='/student/manage-application'>Manage Application</Link>
+                                <Link href='/student/manage-application'>Manage Applications</Link>
                             </li>
                         </>
                     }
@@ -68,6 +68,7 @@ export default Nav
 
 const getInitialProps = async function () {
     let userType = null;
+    
 
     await fetch('/api/account-status', {
         method: 'GET',

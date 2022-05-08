@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Box, Divider, Link, List, ListItem, ListItemText, Typography } from '@mui/material'
 import { FormControl, FormGroup, FormLabel } from '@mui/material';
 
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
@@ -18,120 +18,142 @@ export default function UpdateApplication() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(null)
-  const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: "", subTitle: ""})
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/account-status')
-      .then(res => {
-        setUserId(res.data.sub);
-      })
+    const fetchData = async () => {
+      setLoading(true)
+      const accountStatus = await axios.get('http://localhost:3000/api/account-status');
+      const userId = await accountStatus.data.sub;
+      setUserId(userId);
+
+      await axios.get(`http://localhost:3000/api/applications/${userId}`)
+        .then(async intermediateResponse => {
+          setApplications(await intermediateResponse.data.data);
+          setLoading(false);
+        })
+        .catch(async err => {
+          if (err.response.status === 404) {
+            setApplications([])
+          } else {
+            setMessage(err.response.data.message)
+          }
+        });
+      setLoading(false);
+    }
+    fetchData();
   }, []);
 
-  // console.log(`Saw id: ${userId}`);
-
-  useEffect(() => {
-    axios.get(`http://localhost:3000/api/applications/${userId}`)
-      .then(res => {
-        setApplications(res.data.data);
-        setMessage(res.data.message);
-        setLoading(false);
-      }).catch(err => {
-        setMessage(err.response.data.message)
-      });
-  }, [userId]);
-
-
   const onDelete = id => {
+    console.log(`deleting ${JSON.stringify(id)}`);
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false
     })
-    setApplications(res.data)
+
+    const deleteApplication = async () => {
+      await axios.delete(`http://localhost:3000/api/applications/${id}`, { params: { applicationId: id } })
+        .then(async response => {
+          if (response.status === 200) {
+            setMessage("Application deleted.");
+            window.location.reload();
+          } else {
+            setMessage(response.data.message);
+          }
+        })
+        .catch(async err => {
+          setMessage(err.response.data.message);
+        });
+    }
+    deleteApplication();
   }
-  
-  // if (message !== "Success") {
-  //   return (
-  //     <div>
-  //       <Head>
-  //         <title>Submissions</title>
-  //       </Head>
-  //       <Typography variant="h3">Submissions</Typography>
-  //         <Typography variant="p">{message}</Typography>
-  //     </div>
-  //   )
-  // }
+
+  if (message) {
+    return (
+      <div>
+        <Head>
+          <title>Applications</title>
+        </Head>
+        <Typography variant="h3">Applications</Typography>
+        <Typography variant="p">{message}</Typography>
+      </div>
+    )
+  }
   if (loading) {
     return (
       <div>
         <Head>
-          <title>Submissions</title>
+          <title>Applications</title>
         </Head>
-        <Typography variant="h3">Submissions</Typography>
-          <Typography variant="p">Loading...</Typography>
+        <Typography variant="h3">Applications</Typography>
+        <Typography variant="p">Loading...</Typography>
+      </div>
+    )
+  }
+
+  if (applications.length === 0) {
+    return (
+      <div>
+        <Head>
+          <title>Applications</title>
+        </Head>
+        <Typography variant="h3">Applications</Typography>
+
+        <Typography variant="p">No applications found! Would you like to <Link href='apply'>apply for a position</Link>?</Typography>
       </div>
     )
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'full_name', headerName: 'Name', width: 200 },
-    { field: 'email', headerName: 'Email', width: 300 },
-    { field: 'current_level', headerName: 'Level', width: 100 },
-    { field: 'graduating_semester', headerName: 'Graduating Semester', width: 150 },
-    { field: 'cumulative_gpa', headerName: 'GPA', width: 100, type: 'number' },
-    { field: 'hours_completed', headerName: 'Hours Completed', width: 50, type: 'number' },
-    { field: 'undergraduate_degree', headerName: 'Undergraduate Degree', width: 200 },
-    { field: 'current_major', headerName: 'Major', width: 150 },
-    { field: 'applying_for', headerName: 'Applying For', width: 150 },
-    { field: 'international_student', headerName: 'International Student', width: 150, type: 'boolean' },
-    { field: 'gta_certified', headerName: 'GTA Certified', width: 100, type: 'boolean' },
-    { field: 'gta_certification_term', headerName: 'GTA Certification Term', width: 170 },
-    { field: 'gta_previous_degree', headerName: 'Previous Degree?', width: 150, type: 'boolean' },
-]
+    { field: 'actions', type: 'actions', headerName: 'Actions', width: 130, getActions: (params) => [
+      <GridActionsCellItem
+        icon={<DeleteIcon />}
+        label="Delete"
+        onClick={() => {
+          setConfirmDialog({
+            isOpen: true,
+            title: "Are you sure you want to delete this application?",
+            subTitle: "You can't undo this action.",
+            onConfirm: () => {
+              onDelete(params.id);
+            }
+          })
+        }}
+      />,
+    ]
+  },
+    { field: 'student_id', headerName: 'ID', width: 100 },
+    { field: 'course_id', headerName: 'Course', width: 150 },
+    { field: 'applying_for', headerName: 'Position', width: 150 },
+    { field: 'grade_value', headerName: 'Grade', width: 100 },
+  ]
 
-  // const columns = [
-  //   { field: 'id', headerName: 'ID', width: 100 },
-  //   { field: 'full_name', headerName: 'Name', width: 180 },
-  //   { field: 'applying_for', headerName: 'Position', width: 150 },
-  //   { field: 'courses', headerName: 'Course', width: 150 },
-  //   { field: 'actions', type: 'actions', headerName: 'Actions', width: 130, getActions:(params) => [
-  //     <GridActionsCellItem
-  //       icon={<DeleteIcon/>}
-  //       label="Delete"
-  //       onClick={() => {
-  //         setConfirmDialog({
-  //           isOpen:true,
-  //           title:"Are you sure you want to delete this application?", 
-  //           subTitle:"You can't undo this action.",
-  //           onConfirm: () => {onDelete(applications.id)}
-  //         })}}
-  //     />,
-  //   ] },
-  // ]
-  
   return (
     <div>
-        <Head>
-          <title>Student | Manage Application</title>
-        </Head>
-        <Box
-          sx={{
-            flexWrap: 'wrap',
-            justifyContent: "center",
-          }}>
-          <Typography variant="h3">View Submissions</Typography>
-          <p>{ JSON.stringify(applications) } </p>
-          <DataGrid
-          autoHeight={true}
+      <Head>
+        <title>Student | View Applications</title>
+      </Head>
+      <Box
+        sx={{
+          flexWrap: 'wrap',
+          justifyContent: "center",
+        }}>
+        <Typography variant="h3">View Applications</Typography>
+        <DataGrid
           rows={applications}
           columns={columns}
-        />
-        </Box>
-        <ConfirmDialog 
-          confirmDialog={confirmDialog}
-          setConfirmDialog={setConfirmDialog}
-          />
+          rowsPerPageOptions={[5, 10, 20, 50, 100]}
+          rowHeight={50}
+          autoHeight={true}
+          components={{
+            Toolbar: GridToolbar,
+          }} />
+      </Box>
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </div>
   )
 }

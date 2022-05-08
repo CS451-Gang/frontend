@@ -5,7 +5,6 @@
 
 .container {
   min-height: 100vh;
-  width: fit-content;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -15,7 +14,6 @@
 
 .main {
   width: 65vw;
-  /* width: 85vw; */
   min-width: fit-content;
   overflow: auto; 
   display: flex;

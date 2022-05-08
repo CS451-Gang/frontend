@@ -1,57 +1,130 @@
-import { FormControl, FormGroup, FormLabel } from '@mui/material';
-import React from 'react'
+import { Autocomplete, FormControl, FormGroup, FormLabel, MenuItem } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material';
 import { useForm, Form } from '../../components/useForm';
 import Controls from '../../components/controls/Controls';
 import * as applyService from '../api/applyService.js';
+import axios from 'axios'
 
 const initialValues = {
-    firstName: "Nima",
-    lastName: "Currie",
-    email: "nima.currie@umsystem.edu",
-    stuID: 18371749,
-    gradDegree: "BS",
-    gradSem: "Dec 2022",
-    umkcGPA: "4.0",
-    umkcHours: "120",
+    fullName: "",
+    // firstName: "",
+    // lastName: "",
+    email: "",
+    stuID: null,
+    gradDegree: "",
+    gradSem: "",
+    umkcGPA: "",
+    umkcHours: "",
     undergradDegree: "",
-    currMajor: "CS",
+    currMajor: "",
     isIntl: false,
     isGtaCert: false,
     certTerm: "",
     prevDegree: false,
     grader: true,
-    labInstructor: false,
-    courses: "",
+    labInstructor: true,
+    course: "",
+    grade: "",
 }
 
 export default function ApplyForm() {
+    const [studentId, setStudentId] = useState(initialValues);
+    const [email, setEmail] = useState("");
+    let [message, setMessage] = useState("");
+    let [prevApplication, setPrevApplication] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // If these error out, we should probably redirect to login
+            const accountStatusResponse = await axios.get('http://localhost:3000/api/account-status')
+                .catch(err => {
+                    console.log(`error: ${JSON.stringify(err)}`);
+                    // window.location.replace('/student/login')
+                });
+
+            // If this errors out, there's likely been a server error. Log it and redirect.
+            await axios.get(`http://localhost:3000/api/applications/${accountStatusResponse.data.sub}`)
+                .then(response => {
+                    setPrevApplication(response.data.data);
+                    console.log(response.data.data)
+                })
+                .catch(err => {
+                    console.log(`error: ${JSON.stringify(err)}`);
+                    setPrevApplication([]);
+                });
+            
+            setStudentId(accountStatusResponse.data.sub)
+            setEmail(accountStatusResponse.data.email)
+        }
+        fetchData();
+    }, []);
+
+
+    console.log(`using id: ${studentId}`);
+    console.log(`using email: ${email}`);
+    console.log(`using prevApplication: ${prevApplication}`);
+    
     const validate = (fieldValues = values) => {
+        console.log(values.grade)
+
         //Checks if the elements pass the validation tests. If the condition is true for all properties, return true. Otherwise, false
         let temp = { ...errors }
-        if ('firstName' in fieldValues)
-            temp.firstName = fieldValues.firstName ? "" : "This field is required."
-        if ('lastName' in fieldValues)
-            temp.lastName = fieldValues.lastName ? "" : "This field is required."
+        if ('fullName' in fieldValues)
+            temp.fullName = fieldValues.fullName ? '' : 'Full name is required';
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(values.email) ? "" : "Email is not valid."
         if ('stuID' in fieldValues)
-            temp.stuID = values.stuID.length > 6 ? "" : "Minimum of 8 numbers required."
+            temp.stuID = `${values.stuID}`.length > 6 ? "" : "Minimum of 8 numbers required."
         if ('gradSem' in fieldValues)
             temp.gradSem = fieldValues.gradSem ? "" : "This field is required."
-        // if ('undergradDegree' in fieldValues)
-        //     temp.undergradDegree = fieldValues.undergradDegree?"":"This field is required."
         if ('gradDegree' in fieldValues)
             temp.gradDegree = fieldValues.gradDegree.length != 0 ? "" : "This field is required."
         if ('currMajor' in fieldValues)
             temp.currMajor = fieldValues.currMajor.length != 0 ? "" : "This field is required."
+        if ('course' in fieldValues)
+            temp.course = fieldValues.course.length != 0 ? "" : "This field is required."
+        if ('grade' in fieldValues)
+            temp.grade = fieldValues.grade ? "" : "This field is required."
 
         setErrors({
             ...temp
         })
+        console.log(`fieldvalues = ${JSON.stringify(fieldValues)}`)
+        console.log(`values = ${JSON.stringify(values)}`)
+        console.log(`temp = ${JSON.stringify(temp)}`)
+        console.log(`returning ${Object.values(temp).every(x => x == "")}`)
 
         if (fieldValues == values)
+        
             return Object.values(temp).every(x => x == "")
+    }
+
+    if (studentId) {
+        initialValues.stuID = studentId;
+    }
+
+    if (email) {
+        initialValues.email = email;
+    }
+
+    if (prevApplication.length > 0) {
+        // If a user has multiple previous applications, we should only use one.
+        prevApplication = prevApplication[0];
+        console.log(`prevApplication: ${JSON.stringify(prevApplication)}`);
+        initialValues.fullName = prevApplication.full_name;
+        initialValues.email = prevApplication.email;
+        initialValues.stuID = prevApplication.student_id;
+        initialValues.gradDegree = prevApplication.current_level;
+        initialValues.gradSem = prevApplication.graduating_semester;
+        initialValues.umkcGPA = prevApplication.cumulative_gpa;
+        initialValues.umkcHours = prevApplication.hours_completed;
+        initialValues.undergradDegree = prevApplication.undergraduate_degree;
+        initialValues.currMajor = prevApplication.current_major;
+        initialValues.isIntl = prevApplication.international_student;
+        initialValues.isGtaCert = prevApplication.gta_certified;
+        initialValues.certTerm = prevApplication.gta_certification_term;
+        initialValues.prevDegree = prevApplication.gta_previous_degree;
     }
 
     const {
@@ -64,6 +137,8 @@ export default function ApplyForm() {
 
     const handleSubmit = async event => {
         event.preventDefault()
+        console.log("sending data...");
+
         if (validate()) {
             try {
                 const response = await applyService.createApplication(values)
@@ -76,8 +151,11 @@ export default function ApplyForm() {
                     window.location.href = "/student/manage-application"
                 }
             } catch (e) {
+                console.log("validate saw error")
                 console.log(e)
             }
+        } else {
+            console.log("not validating")
         }
     }
 
@@ -114,9 +192,18 @@ export default function ApplyForm() {
                                 />
                             </FormGroup>
                         </FormControl>
+                        <p className="error">{ message }</p>
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
                         <Controls.UserInput
+                            type="text"
+                            name="fullName"
+                            label="Full Name"
+                            value={values.fullName}
+                            onChange={handleInputChange}
+                            error={errors.fullName}
+                        />
+                        {/* <Controls.UserInput
                             type="text"
                             name="firstName"
                             label="First Name"
@@ -131,7 +218,7 @@ export default function ApplyForm() {
                             value={values.lastName}
                             onChange={handleInputChange}
                             error={errors.lastName}
-                        />
+                        /> */}
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
                         <Controls.UserInput
@@ -171,7 +258,7 @@ export default function ApplyForm() {
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
                         <Controls.UserInput
-                            type="month"
+                            type="text"
                             name="gradSem"
                             label="Graduation Semester"
                             helperText="Choose 'May/Dec' for month"
@@ -210,13 +297,22 @@ export default function ApplyForm() {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
+
                         <Controls.Select
-                            name="courses"
-                            label="Courses you can be a grader or lab instructor for:"
-                            value={values.courses}
+                            name="course"
+                            label="Course Preference"
+                            value={values.course}
                             options={applyService.getCourses()}
-                            onChange={(event) => handleInputChange(event)}
-                            error={errors.courses}
+                            onChange={handleInputChange}
+                            error={errors.course}
+                        />
+                        <Controls.Select
+                            name="grade"
+                            label="Grade Received"
+                            value={values.grade}
+                            options={applyService.getGrades()}
+                            onChange={(handleInputChange)}
+                            error={errors.grade}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ display: "flex", gap: "1rem", width: "100%" }}>
@@ -224,7 +320,7 @@ export default function ApplyForm() {
                             component="fieldset"
                             variant="standard"
                         >
-                            <FormLabel>For international Students ONLY</FormLabel>
+                            <FormLabel>For international Students ONLY:</FormLabel>
                             <Controls.CheckBox
                                 name="isIntl"
                                 label="Are you an International Student?"
@@ -261,7 +357,7 @@ export default function ApplyForm() {
                         <Controls.Button
                             type="submit"
                             text="Submit"
-                            // href="/student/application-submitted"
+                        // href="/student/application-submitted"
                         />
                     </Grid>
                 </Grid>

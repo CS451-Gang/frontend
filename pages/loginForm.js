@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { FormControl, FormGroup, FormLabel, Paper, TextField } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -21,6 +21,20 @@ const initialValues={
 
 export default function LoginForm() {
     let [message, setMessage] = useState(null);
+    let [user, setUser] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/account-status')
+          .then(res => {
+            if (res.status === 200) {
+              setUser(res.data)
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            window.location.replace('/login');
+          })
+      }, [])
 
     const validate = (fieldValues = values) => {
         let temp = {...errors}
@@ -37,6 +51,8 @@ export default function LoginForm() {
         if (fieldValues == values)
             return Object.values(temp).every(x => x == "")
     }
+
+    console.log(`saw user: ${JSON.stringify(user)}`)
     
     const {
         values, 
@@ -65,12 +81,16 @@ export default function LoginForm() {
                 if (res.status === 200) {
                     const user_type = res.data.user_type;
                     window.location.replace(`/${user_type}/home`);
-                } else {
-                    setMessage(res.message)
                 }
             }).catch(err => {
-                console.log(JSON.stringify(err))
-                setMessage(err.message);
+                console.log(`err status: ${err.response.status}`);
+                if (err.response.status == 406 && user !== null) {
+                    console.log("logged in!")
+                    setMessage(`You're already logged in.`);
+                } else {
+                    console.log("bad!")
+                    setMessage(err.message)
+                }
             });
         }
     };
@@ -139,10 +159,11 @@ export default function LoginForm() {
                     />
             </Grid>
             </Grid>
-        </Form>
-        <div>
+            <div style={{textAlign: "center"}}>
         { message && <p>{message}</p> }
-        </div>
+            </div>
+        </Form>
+        
         </>
   )
 }

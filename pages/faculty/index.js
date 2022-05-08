@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Container } from '@mui/material';
 
 const facultyHome = () => {
   const [user, setUser] = useState(null);

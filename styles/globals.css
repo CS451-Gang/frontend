@@ -31,6 +31,25 @@ a.visible {
   overflow: scroll;
 }
 
+.MuiDataGrid-root {
+  min-width: 60vw;
+  width: 100% !important;
+}
+
 .MuiFormHelperText-root {
   padding-bottom: 1rem;
+}
+
+.submissions {
+  width: 65vw;
+}
+
+h3 {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+p.error {
+  color: #d32f2f;
+  text-align: center;
 }

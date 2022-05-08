@@ -12,6 +12,14 @@ export const getCourses = () => ([
     {id: "CS404", title: "Introduction to Algorithms and Complexity"},
 ])
 
+export const getGrades = () => ([
+    {id: "A", title: "A"},
+    {id: "B", title: "B"},
+    {id: "C", title: "C"},
+    {id: "D", title: "D"},
+    {id: "F", title: "F"},
+])
+
 export const getMajors = () => ([
     {id: "CS", title: "Computer Science"},
     {id: "IT", title: "Information Technology"},
@@ -26,6 +34,7 @@ export const getGradDegrees = () => ([
 ])
 
 export const createApplication = async (application) => {
+    console.log(`createApplication saw application: ${JSON.stringify(application)}`);
     let cleaned_application = {}
     for (const [key, value] of Object.entries(application)) {
         if (value == "") {
@@ -44,5 +53,6 @@ export const createApplication = async (application) => {
         },
         body: JSON.stringify(cleaned_application)
     });
+    
     return response
 }

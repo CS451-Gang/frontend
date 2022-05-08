@@ -53,16 +53,18 @@ const submissions = () => {
   }
 
   const columns = [
-      { field: 'id', headerName: 'ID', width: 100 },
-      { field: 'full_name', headerName: 'Name', width: 200 },
-      { field: 'email', headerName: 'Email', width: 300 },
+      { field: 'student_id', headerName: 'ID', width: 100 },
+      { field: 'full_name', headerName: 'Name', width: 110 },
+      { field: 'email', headerName: 'Email', width: 250 },
       { field: 'current_level', headerName: 'Level', width: 100 },
       { field: 'graduating_semester', headerName: 'Graduating Semester', width: 150 },
-      { field: 'cumulative_gpa', headerName: 'GPA', width: 100, type: 'number' },
-      { field: 'hours_completed', headerName: 'Hours Completed', width: 50, type: 'number' },
-      { field: 'undergraduate_degree', headerName: 'Undergraduate Degree', width: 200 },
-      { field: 'current_major', headerName: 'Major', width: 150 },
-      { field: 'applying_for', headerName: 'Applying For', width: 150 },
+      { field: 'cumulative_gpa', headerName: 'GPA', width: 50, type: 'number' },
+      { field: 'hours_completed', headerName: 'Hours Completed', width: 70, type: 'number' },
+      { field: 'undergraduate_degree', headerName: 'Undergraduate Degree', width: 180 },
+      { field: 'current_major', headerName: 'Major', width: 100 },
+      { field: 'applying_for', headerName: 'Applying For', width: 120 },
+      { field: 'course_id', headerName: 'Course', width: 100 },
+      { field: 'grade_value', headerName: 'Grade', width: 50 },
       { field: 'international_student', headerName: 'International Student', width: 150, type: 'boolean' },
       { field: 'gta_certified', headerName: 'GTA Certified', width: 100, type: 'boolean' },
       { field: 'gta_certification_term', headerName: 'GTA Certification Term', width: 170 },
@@ -77,6 +79,7 @@ const submissions = () => {
 
         <h1>View Submissions</h1>
 
+        <div className='submissions'>
         <DataGrid
           rows={applications}
           columns={columns}
@@ -87,7 +90,9 @@ const submissions = () => {
             Toolbar: GridToolbar,
           }}
         />
+        </div>
     </div>
+    
   )
 }
 
