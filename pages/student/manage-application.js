@@ -1,5 +1,4 @@
-import { Box, Divider, Link, List, ListItem, ListItemText, Typography } from '@mui/material'
-import { FormControl, FormGroup, FormLabel } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material'
 
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import React from 'react'
@@ -7,11 +6,7 @@ import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
 import ConfirmDialog from '../../components/ConfirmDialog';
-import ApplyForm from './application-form';
-
 
 export default function UpdateApplication() {
 
@@ -108,6 +103,7 @@ export default function UpdateApplication() {
   const columns = [
     { field: 'actions', type: 'actions', headerName: 'Actions', width: 130, getActions: (params) => [
       <GridActionsCellItem
+        key="delete"
         icon={<DeleteIcon />}
         label="Delete"
         onClick={() => {

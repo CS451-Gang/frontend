@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
+import UserHome from '../../components/UserHome';
 
 const facultyHome = () => {
   const [user, setUser] = useState(null);
@@ -17,8 +18,9 @@ const facultyHome = () => {
         }
       })
       .catch(err => {
+
         console.log(err);
-        window.location.replace('/login');
+        // window.location.replace('/login');
       })
   }, [])
 
@@ -33,10 +35,10 @@ const facultyHome = () => {
           imgAlt="Atterbury Student Success Center at University of Missouri-Kansas City"
           title={user && <Typography variant="h2">Hello, {user.email}!</Typography>}
           subtitle="What do you want to do today?"
-          buttonText="Submit a GTA application"
-          buttonLink="/student/apply"
-          buttonText2="Manage previous applications"
-          buttonLink2="/student/manage-application"
+          buttonText="Review Submissions"
+          buttonLink="/faculty/submissions"
+          buttonText2="Manage Listings"
+          buttonLink2="/faculty/manageApp"
           />
       </Container>
     </div>

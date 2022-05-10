@@ -22,7 +22,7 @@ const manageApp = () => {
       })
       .catch(err => {
         console.log(err);
-        window.location.replace('/faculty/login');
+        // window.location.replace('/faculty/login');
       })
   }, [])
 
@@ -87,12 +87,12 @@ const manageApp = () => {
     <>
       <div>
         <Head>
-          <title>Faculty | Manage Applicaiton</title>
+          <title>Faculty | Manage Application</title>
         </Head>
 
         <h1>Manage Application</h1>
 
-        <p>
+        <div class="demo-autocomplete">
           <Autocomplete
             multiple
             id="manage-CS-classes"
@@ -116,9 +116,9 @@ const manageApp = () => {
               <TextField {...params} label="CS Classes" placerholder="Added Classes" />
             )}
           />
-        </p>
+        </div>
 
-        <p>
+        <div class="demo-autocomplete">
           <Autocomplete
             multiple
             id="manage-ECE-classes"
@@ -142,9 +142,9 @@ const manageApp = () => {
               <TextField {...params} label="ECE Classes" placerholder="Added Classes" />
             )}
           />
-        </p>
+        </div>
 
-        <p>
+        <div class="demo-autocomplete">
           <Autocomplete
             multiple
             id="manage-IT-classes"
@@ -168,9 +168,9 @@ const manageApp = () => {
               <TextField {...params} label="IT Classes" placerholder="Added Classes" />
             )}
           />
-        </p>
+        </div>
 
-        <Button type="submit" variant="contained" >Submit Changes</Button>
+        <Button type="submit" variant="contained" href="/faculty/manage-listings">Submit Changes</Button>
 
       </div>
     </>

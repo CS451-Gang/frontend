@@ -32,7 +32,6 @@ export default function LoginForm() {
           })
           .catch(err => {
             console.log(err);
-            window.location.replace('/login');
           })
       }, [])
 
@@ -80,7 +79,7 @@ export default function LoginForm() {
             }).then(res => {
                 if (res.status === 200) {
                     const user_type = res.data.user_type;
-                    window.location.replace(`/${user_type}/home`);
+                    window.location.replace(`/${user_type}`);
                 }
             }).catch(err => {
                 console.log(`err status: ${err.response.status}`);

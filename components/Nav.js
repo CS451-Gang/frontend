@@ -28,13 +28,13 @@ const Nav = () => {
                     {userType === "faculty" && 
                         <>
                             <li>
-                                <Link href='/faculty/home'>Home</Link>
+                                <Link href='/faculty'>Home</Link>
                             </li>
                             <li>
                                 <Link href='/faculty/submissions'>View Submissions</Link>
                             </li>
                             <li>
-                                <Link href='/faculty/manage-listings'>Manage Listings</Link>
+                                <Link href='/faculty/manageApp'>Manage Listings</Link>
                             </li>
                         </>
                     }

@@ -53,3 +53,7 @@ p.error {
   color: #d32f2f;
   text-align: center;
 }
+
+.demo-autocomplete {
+  padding: 1rem 0;
+}

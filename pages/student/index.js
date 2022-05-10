@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import UserHome from '../../components/UserHome';
 
 const studentHome = () => {
@@ -19,7 +19,6 @@ const studentHome = () => {
       })
       .catch(err => {
         console.log(err);
-        window.location.replace('/login');
       })
   }, [])
 
